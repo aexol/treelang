@@ -1,0 +1,32 @@
+{
+  "name": "treelang",
+  "version": "1.0.0",
+  "description": "Graph tree mini language for graph generation",
+  "main": "index.js",
+  "bin": {
+    "tree": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pegjs grammar.pegjs "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aexol/treelang.git"
+  },
+  "keywords": [
+    "graph",
+    "language",
+    "tree"
+  ],
+  "author": "Aexol <aexol@aexol.com> (http://aexol.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aexol/treelang/issues"
+  },
+  "homepage": "https://github.com/aexol/treelang#readme",
+  "dependencies": {
+    "pegjs": "^0.10.0",
+    "stdio": "^2.1.1"
+  }
+}

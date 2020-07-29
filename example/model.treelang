@@ -1,0 +1,12 @@
+home
+blog
+careers
+products{
+  jamstack
+  editor
+  zeus{
+   typescript
+   javascript
+  }
+}
+footer
