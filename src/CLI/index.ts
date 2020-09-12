@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const stdio = require("stdio");
-const p = require("./grammar");
-const t = require("./treelang");
+import fs from "fs";
+import stdio from "stdio";
+import p from "../grammar";
+import { treelang } from "../treelang";
 
 const [, , f] = process.argv;
 
@@ -33,6 +33,6 @@ var flags = stdio.getopt({
   },
 });
 
-const outputLanguage = flags.format;
+const outputLanguage = flags!.format as "js" | "ts" | "json";
 
-console.log(t.treelang(v, outputLanguage));
+console.log(treelang(v, outputLanguage));

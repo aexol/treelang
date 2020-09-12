@@ -1,1 +1,4 @@
 /node_modules
+/lib
+/example/model.ts
+/example/model.js
