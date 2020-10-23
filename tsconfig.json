@@ -14,6 +14,7 @@
     // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
     "strict": true,                           /* Enable all strict type-checking options. */
     "noUnusedLocals": true,                /* Report errors on unused locals. */
+    "lib": ["es6", "es7", "esnext", "dom"],
     // "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
