@@ -4,34 +4,30 @@ import path from "path";
 const typescript = (value: string) => `export const tree = ${value} as const`;
 const javascript = (value: string) => `export const tree = ${value}`;
 const json = (value: string) => value;
-const RE = /[\s\{\}](\*[a-z0-9A-Z*\/]+)/gm;
+const RE = /(?:^|\s|{|}|\t|\n)(\*[a-z0-9A-Z*\/]+)/gm;
 
-const traverseImports = (text: string, basePath?: string) => {
-  let newText = text;
-  const imports = [...text.matchAll(RE)];
-  imports.forEach((i) => {
-    if (i.index) {
-      if (!basePath) {
-        throw new Error("You can only use imports in files not in runtime");
-      }
-      const nameOfFile = i[1].substr(1);
-      let fullFilePath = path.join(basePath, `${nameOfFile}.treelang`);
-      if (!fs.existsSync(fullFilePath)) {
-        const indexFilePath = path.join(basePath, nameOfFile, "index.treelang");
-        if (!fs.existsSync(indexFilePath)) {
-          throw new Error(
-            `File does not exists. Please create file in ${fullFilePath} or index.treelang in ${indexFilePath}`
-          );
-        }
-        fullFilePath = indexFilePath;
-      }
-      newText = `${newText.substr(0, i.index)} ${nameOfFile}{${traverseImports(
-        fs.readFileSync(fullFilePath, { encoding: "utf-8" }),
-        path.dirname(fullFilePath)
-      )}}${newText.substr(i.index + i[0].length)}`;
+const traverseImports = (text: string, basePath?: string): string => {
+  return text.replace(RE, (matched) => {
+    if (!basePath) {
+      throw new Error("You can only use imports in files not in runtime");
     }
+    const nameOfFile = matched.replace(/\s/g, "").substr(1);
+    let fullFilePath = path.join(basePath, `${nameOfFile}.treelang`);
+    if (!fs.existsSync(fullFilePath)) {
+      const indexFilePath = path.join(basePath, nameOfFile, "index.treelang");
+      if (!fs.existsSync(indexFilePath)) {
+        throw new Error(
+          `File does not exists. Please create file in ${fullFilePath} or index.treelang in ${indexFilePath}`
+        );
+      }
+      fullFilePath = indexFilePath;
+    }
+    const importedFile = traverseImports(
+      fs.readFileSync(fullFilePath, { encoding: "utf-8" }),
+      path.dirname(fullFilePath)
+    );
+    return ` ${nameOfFile}{${importedFile}}`;
   });
-  return newText;
 };
 
 /**
