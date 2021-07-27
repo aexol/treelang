@@ -1,6 +1,6 @@
 {
   "name": "treelang",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Graph tree mini language for graph generation",
   "main": "index.js",
   "bin": {

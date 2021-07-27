@@ -177,50 +177,30 @@ about
 home
 ```
 
-### Real world usage UX planning
+#### Import index
+
+index.treelang
 
 ```
-MainScreen{
-    openTutorial{
-        skipLesson
-        checkLesson
-    }
-    openProjects{
-        createProject{
-            typeName
-            submit
-        }
-        loadProject
-        deleteProject
-    }
-    openHelp{
-        search
-        sendFeedback
-    }
-    openConsole{
-        submitCommand
+Webpage{
+    Main{
+        *menu
     }
 }
 ```
 
-### Real world usage UI planning
+menu/index.treelang
 
 ```
-LoginScreen{
-    googleLogin
-    githubLogin
-    usernameInput
-    passwordInput
-    submit
-}
-TodosScreen{
-    todoList{
-        name
-        done
-    }
-    newTodo{
-        nameInput
-        submit
-    }
-}
+about
+home
+*burger
+```
+
+menu/burger.treelang
+
+```
+cars
+planes
+motorcycles
 ```

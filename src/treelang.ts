@@ -14,25 +14,21 @@ const traverseImports = (text: string, basePath?: string) => {
       if (!basePath) {
         throw new Error("You can only use imports in files not in runtime");
       }
-      const [, ...nameOfFile] = i[1];
-      const newFilePath = path.join(
-        basePath,
-        `${nameOfFile.join("")}.treelang`
-      );
-      newText =
-        newText.substr(0, i.index) +
-        " " +
-        nameOfFile.join("") +
-        "{" +
-        traverseImports(
-          fs.readFileSync(
-            path.join(basePath, `${nameOfFile.join("")}.treelang`),
-            { encoding: "utf-8" }
-          ),
-          path.dirname(newFilePath)
-        ) +
-        "}" +
-        newText.substr(i.index + i[0].length);
+      const nameOfFile = i[1].substr(1);
+      let fullFilePath = path.join(basePath, `${nameOfFile}.treelang`);
+      if (!fs.existsSync(fullFilePath)) {
+        const indexFilePath = path.join(basePath, nameOfFile, "index.treelang");
+        if (!fs.existsSync(indexFilePath)) {
+          throw new Error(
+            `File does not exists. Please create file in ${fullFilePath} or index.treelang in ${indexFilePath}`
+          );
+        }
+        fullFilePath = indexFilePath;
+      }
+      newText = `${newText.substr(0, i.index)} ${nameOfFile}{${traverseImports(
+        fs.readFileSync(fullFilePath, { encoding: "utf-8" }),
+        path.dirname(fullFilePath)
+      )}}${newText.substr(i.index + i[0].length)}`;
     }
   });
   return newText;
