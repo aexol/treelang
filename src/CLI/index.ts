@@ -2,7 +2,7 @@
 
 import fs from "fs";
 import stdio from "stdio";
-import p from "../grammar";
+import path from "path";
 import { treelang } from "../treelang";
 
 const [, , f] = process.argv;
@@ -17,11 +17,9 @@ const ext = fparts.splice(-1)[0];
 if (ext !== "treelang") {
   throw new Error(`Incorect extension .${ext} should be .treelang`);
 }
-const v = p.parse(
-  fs.readFileSync(f, {
-    encoding: "utf-8",
-  })
-);
+const v = fs.readFileSync(f, {
+  encoding: "utf-8",
+});
 
 var flags = stdio.getopt({
   format: {
@@ -35,4 +33,4 @@ var flags = stdio.getopt({
 
 const outputLanguage = flags!.format as "js" | "ts" | "json";
 
-console.log(treelang(v, outputLanguage));
+console.log(treelang(v, outputLanguage, path.dirname(f)));

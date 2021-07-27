@@ -146,7 +146,7 @@ function peg$parse(input, options) {
           function goDown (val,acc = "") {
           	if(typeof val === "string"){
               	return {[val]:[acc,val].filter(s=>!!s).join("-")}
-              }
+            }
               const key = Object.keys(val)[0]
               return { [key]:val[key].map(k => goDown(k,[acc,key].filter(s=>!!s).join("-"))).reduce((a,b)=> ({...a,...b})) }
           }
@@ -157,8 +157,8 @@ function peg$parse(input, options) {
       peg$c3 = "}",
       peg$c4 = peg$literalExpectation("}", false),
       peg$c5 = function(key, value) { return {[key]: value } },
-      peg$c6 = /^[a-z0-9A-Z]/,
-      peg$c7 = peg$classExpectation([["a", "z"], ["0", "9"], ["A", "Z"]], false, false),
+      peg$c6 = /^[a-z0-9A-Z*\/]/,
+      peg$c7 = peg$classExpectation([["a", "z"], ["0", "9"], ["A", "Z"], "*", "/"], false, false),
       peg$c8 = function(name) { return name.join("") },
       peg$c9 = peg$otherExpectation("whitespace"),
       peg$c10 = /^[ \t\n\r]/,

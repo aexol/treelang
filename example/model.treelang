@@ -4,9 +4,6 @@ careers
 products{
   jamstack
   editor
-  zeus{
-   typescript
-   javascript
-  }
+  *zeus
 }
 footer
